@@ -3,10 +3,12 @@ import Image from "next/image";
 import { useState } from "react";
 import web3 from "../web3/web3";
 import blobguys from "../web3/blobguys";
+import Loading from "./Loading";
 
 export default function Controls(props) {
   const { supply } = props;
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   function add() {
     if (count < 2) setCount(count + 1);
@@ -20,47 +22,55 @@ export default function Controls(props) {
 
   async function buy() {
     const accounts = await web3.eth.getAccounts();
-    console.log(accounts[0]);
     try {
-      await blobguys.methods.mint(accounts[0], count).send({
+      setLoading(true);
+      await blobguys.methods.mint(`${count}`).send({
         from: accounts[0],
         value: web3.utils.toWei(`${0.02 * count}`, "ether"),
       });
-      alert(`Success! You have minted ${count} blob guys`);
-      setCount(0);
+      props.reload();
     } catch (err) {
       console.log(err.message);
     }
+    setLoading(false);
   }
 
   return (
-    <div className={classes.contain}>
-      <h2>{`${supply}/20`}</h2>
-      <p className={classes.price}>{"price = 0.02 ether"}</p>
-      <div className={classes.controls}>
-        <div className={classes.control}>
-          <button
-            className={classes.minus}
-            onClick={subtract}
-            style={
-              count <= 0
-                ? {
-                    opacity: "0.2",
-                    cursor: "not-allowed",
-                    pointerEvents: "none",
-                  }
-                : {}
-            }
-          >
-            <Image src={"/minus.png"} width={100} height={100} />
-          </button>
-          <p>{count}</p>
-          <button className={classes.plus} onClick={add}>
-            <Image src={"/plus.png"} width={100} height={100} />
-          </button>
+    <>
+      {(loading && (
+        <div className={classes.contain} style={{ height: "30vh" }}>
+          <Loading />
         </div>
-        <button onClick={buy}>BUY</button>
-      </div>
-    </div>
+      )) || (
+        <div className={classes.contain}>
+          <h2>{`${supply}/20`}</h2>
+          <p className={classes.price}>{"price = 0.02 ether"}</p>
+          <div className={classes.controls}>
+            <div className={classes.control}>
+              <button
+                className={classes.minus}
+                onClick={subtract}
+                style={
+                  count <= 0
+                    ? {
+                        opacity: "0.2",
+                        cursor: "not-allowed",
+                        pointerEvents: "none",
+                      }
+                    : {}
+                }
+              >
+                <Image src={"/minus.png"} width={100} height={100} />
+              </button>
+              <p style={{ width: "5vw" }}>{count}</p>
+              <button className={classes.plus} onClick={add}>
+                <Image src={"/plus.png"} width={100} height={100} />
+              </button>
+            </div>
+            <button onClick={buy}>BUY</button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

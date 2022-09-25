@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import Head from "next/head";
 import { useEffect } from "react";
 import Controls from "../components/Controls";
@@ -7,6 +8,7 @@ import Preview from "../components/Preview";
 import blobguys from "../web3/blobguys";
 
 export default function Home(props) {
+  const router = useRouter();
   useEffect(() => {
     screen.orientation.lock("natural");
   });
@@ -19,7 +21,10 @@ export default function Home(props) {
       <Header />
       <div className="contain">
         <Preview gif={"/blobguys_prev.gif"} />
-        <Controls supply={props.supply} />
+        <Controls
+          supply={props.supply}
+          reload={() => router.reload(window.location.pathname)}
+        />
         <Preview gif={"/blobguys_prev2.gif"} />
       </div>
       <Footer />
@@ -34,5 +39,6 @@ export async function getStaticProps() {
     props: {
       supply,
     },
+    revalidate: 30,
   };
 }
