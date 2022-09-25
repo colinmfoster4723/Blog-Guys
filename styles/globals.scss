@@ -45,16 +45,6 @@ button {
   align-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
-
 @media only screen and (max-width: 800px) {
   .contain {
     flex-direction: column;
