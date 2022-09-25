@@ -1,0 +1,18 @@
+.footer {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 5vh;
+  color: #42876c;
+  font-size: 75%;
+  line-height: 4vh;
+  .warning {
+    color: black;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .footer {
+    font-size: 70%;
+    height: 100%;
+  }
+}

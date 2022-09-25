@@ -1,0 +1,67 @@
+@font-face {
+  font-family: custom;
+  src: url(../public/SloppyLeftovers-mP9a.ttf);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: custom;
+  word-spacing: 2vw;
+  color: black;
+  background-color: #afe5d0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0.3vw;
+}
+
+.pgContain {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.contain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  font-family: custom;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .contain {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pgContain {
+    gap: 0;
+  }
+}

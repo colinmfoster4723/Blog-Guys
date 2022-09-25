@@ -1,0 +1,12 @@
+.img {
+  width: 27vw;
+  img {
+    border-radius: 100%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .img {
+    height: 100%;
+  }
+}
